@@ -5,7 +5,6 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User
 
-
 @app.route('/')
 @app.route('/blog')
 def blog():
@@ -17,7 +16,8 @@ def blog():
     for key, value in posts_dict.items():
         posts.append(value)
     
-    return render_template("blog.html", title="Blog", posts=posts)
+    # return render_template("blog.html", title="Blog", posts=posts)
+    return '{ name: "karen"}'
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -65,3 +65,9 @@ def user(username):
         {'author': user, 'body': 'Test post #2'}
     ]
     return render_template('user.html', user=user, posts=posts)
+
+
+@app.route('/api/data')
+def get_data():
+    data = {'message': 'Hello, world!'}
+    return data
