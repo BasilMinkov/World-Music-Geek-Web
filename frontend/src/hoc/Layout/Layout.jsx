@@ -33,7 +33,7 @@ const Layout = (props) => {
           <Album 
             albumImage={AlbumImg1}
             albumName='Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan'
-            albumAuthor='Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan'
+            albumAuthor='Nashenas'
           />
           <Album 
             albumImage={AlbumImg2}
