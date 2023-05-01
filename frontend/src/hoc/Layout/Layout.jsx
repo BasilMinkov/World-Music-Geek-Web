@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../../component/Header/Header'
 // import Footer from '../../component/Footer/Footer'
+import Album from '../../component/Album/Album'
 import AlbumImg1 from '../../assets/1.jpg'
 import AlbumImg2 from '../../assets/2.jpg'
 import AlbumImg3 from '../../assets/3.jpg'
@@ -29,87 +30,51 @@ const Layout = (props) => {
           </nav>
         </div>
         <div className="library">
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg1} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan</div>
-              <div className="album__author">Nashenas</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg2} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Virtuoso from Afghanistan</div>
-              <div className="album__author">Mohammad Omar</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg3} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Homayun Sakhi – Music of Central Asia, Vol. 3: Homayun Sakhi: The…</div>
-              <div className="album__author">Homayun Sakhi</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg4} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Mien (Yao): Cannon Singing in China, Vietnam, Laos</div>
-              <div className="album__author">Mien (Yao)</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg5} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Hand to Earth</div>
-              <div className="album__author">Australian Art Orchestra</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg6} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Kanawa</div>
-              <div className="album__author">Nahawa Doumbia</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg7} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Indian Talking Machine</div>
-              <div className="album__author">Various Artists</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg8} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">This Pale</div>
-              <div className="album__author">Shujaat Khan & Katayoun Goudarzi</div>
-            </div>
-          </div>
-          <div className="album">
-            <div className="album__img">
-              <img src={AlbumImg9} alt="" />
-            </div>
-            <div className="album__info">
-              <div className="album__name">Umdali</div>
-              <div className="album__author">Malcolm Jiyane Tree-O</div>
-            </div>
-          </div>
+          <Album 
+            albumImage={AlbumImg1}
+            albumName='Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan'
+            albumAuthor='Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan'
+          />
+          <Album 
+            albumImage={AlbumImg2}
+            albumName='Virtuoso from Afghanistan'
+            albumAuthor='Mohammad Omar'
+          />
+          <Album 
+            albumImage={AlbumImg3}
+            albumName='Homayun Sakhi – Music of Central Asia, Vol. 3: Homayun Sakhi: The…'
+            albumAuthor='Homayun Sakhi'
+          />
+          <Album 
+            albumImage={AlbumImg4}
+            albumName='Mien (Yao): Cannon Singing in China, Vietnam, Laos'
+            albumAuthor='Mien (Yao)'
+          />
+          <Album 
+            albumImage={AlbumImg5}
+            albumName='Hand to Earth'
+            albumAuthor='Australian Art Orchestra'
+          />
+          <Album 
+            albumImage={AlbumImg6}
+            albumName='Malcolm Jiyane Tree-O'
+            albumAuthor='Nahawa Doumbia'
+          />
+          <Album 
+            albumImage={AlbumImg7}
+            albumName='Indian Talking Machine'
+            albumAuthor='Various Artists'
+          />
+          <Album 
+            albumImage={AlbumImg8}
+            albumName='This Pale'
+            albumAuthor='Shujaat Khan & Katayoun Goudarzi'
+          />
+          <Album 
+            albumImage={AlbumImg9}
+            albumName='Umdali'
+            albumAuthor='Malcolm Jiyane Tree-O'
+          />         
         </div>
       </div>
       {/* <Footer></Footer> */}
