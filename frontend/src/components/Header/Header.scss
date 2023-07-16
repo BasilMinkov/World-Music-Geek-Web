@@ -1,0 +1,31 @@
+.header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    &__logo-container {
+        img {
+            height: 80px;
+
+        }
+    }
+
+    &__nav {
+        display: grid;
+        column-gap: 1.5rem;
+        grid-template-columns: auto auto;
+        justify-content: center;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .active {
+        color: #000;
+    }
+
+    .pending {
+        color: rgba(0, 0, 0, 0.3);
+    }
+}

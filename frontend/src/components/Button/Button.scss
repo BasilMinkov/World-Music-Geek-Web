@@ -1,0 +1,19 @@
+.button {
+    padding: .75rem 2rem;
+    font-size: 1rem;
+    color: black;
+    background-color: none;
+    border: none;
+    cursor: pointer;
+
+    &--transparent {
+        border: 2px solid black;
+        background-color: white;
+        transition: 500ms;
+
+        &:hover {
+            color: white;
+            background-color: black;
+        }
+    }
+}
