@@ -1,18 +1,46 @@
 import React from 'react'
 import './Header.scss'
+import logoLink from '../../assets/images/logo.png'
+import Button from '../Button/Button'
+import { NavLink, Link } from 'react-router-dom'
 
-const Header: React.FC = () => {
+const Header: React.FC = (props) => {
+
     return (
         <header className="header">
             <div className="header__logo-container">
-                img
+                <Link to="/">
+                <img src={logoLink} alt="World Music Geek" />
+                </Link>
             </div>
             <nav className="header__nav">
-                menu
+                <NavLink
+                    to="/blog"
+                    className={({ isActive, isPending }) =>
+                        isActive ? "active" : "pending"
+                    }
+                >
+                    blog
+                </NavLink>
+                <NavLink
+                    to="/"
+                    className={({ isActive, isPending }) =>
+                        isActive ? "active" : "pending"
+                    }
+                >
+                    library
+                </NavLink>
             </nav>
             <div className="button-container">
-                button
+                <Button
+                    type="button"
+                    buttonType="transparent"
+                >
+                    Donate
+                </Button>
             </div>
         </header>
     )
 }
+
+export default Header
