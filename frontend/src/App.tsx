@@ -10,13 +10,10 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <BrowserRouter>
-        <Layout></Layout>
-        {/* 
         <Routes>
           <Route path="*" element={<Library />} />
           <Route path="/blog" element={<Blog />} />
         </Routes>
-      */}
       </BrowserRouter>
     </div>
   );
