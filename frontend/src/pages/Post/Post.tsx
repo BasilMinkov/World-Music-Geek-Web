@@ -1,14 +1,15 @@
 import React from 'react'
+import './Post.scss'
 import Layout from '../../hoc/Layout'
 
-const Blog: React.FC = () => {
+const Post: React.FC = () => {
     return (
         <Layout>
-            <div className="blog">
+            <div className="post">
 
             </div>
         </Layout>
     )
 }
 
-export default Blog
+export default Post
