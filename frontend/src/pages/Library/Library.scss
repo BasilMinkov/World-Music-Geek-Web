@@ -1,0 +1,27 @@
+.library {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    min-height: 100vh;
+    padding: 0 250px 0 290px;
+
+    &__sidebar {
+        ul {
+            width: 200px;
+            list-style-type: none;
+            display: grid;
+            row-gap: .75rem;
+
+            li {
+                text-align: left;
+                font-weight: 700;
+                line-height: 32px;
+            }
+        }
+    }
+
+    &__album-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+    }
+}
