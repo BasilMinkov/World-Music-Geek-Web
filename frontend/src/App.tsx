@@ -11,7 +11,8 @@ const App: React.FC = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<Library />} />
+          <Route path="/*" element={<Library />} />
+          <Route path="/library" element={<Library />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/post/:postId" element={<Post />} />
         </Routes>
