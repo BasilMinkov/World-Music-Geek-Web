@@ -10,7 +10,7 @@ const Header: React.FC = (props) => {
         <header className="header">
             <div className="header__logo-container">
                 <Link to="/">
-                <img src={logoLink} alt="World Music Geek" />
+                    <img src={logoLink} alt="World Music Geek" />
                 </Link>
             </div>
             <nav className="header__nav">
@@ -23,7 +23,7 @@ const Header: React.FC = (props) => {
                     blog
                 </NavLink>
                 <NavLink
-                    to="/"
+                    to="/library"
                     className={({ isActive, isPending }) =>
                         isActive ? "active" : "pending"
                     }

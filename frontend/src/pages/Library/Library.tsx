@@ -1,76 +1,13 @@
 import React, { useState } from 'react'
 import Layout from '../../hoc/Layout'
 import AlbumCard from '../../components/AlbumCard/AlbumCard'
+import data from '../../data.json'
 import './Library.scss'
 
 const Library: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const data = [
-        {
-            "id": "1",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "2",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "3",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "4",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "5",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "6",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "7",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "8",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-        {
-            "id": "9",
-            "title": "Life Is a Heavy Burden: Ghazals & Poetry From Afghanistan",
-            "author": "Nashenas",
-            "postId": "",
-            "imageLink": "https://i.ibb.co/PWQK6nh/nashenas.png",
-        },
-    ]
+    // Добавить fetch
 
     return (
         <Layout>
