@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
+import os
 import json
+import datetime
 import argparse
-import os.path
 
 import pandas as pd
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
+from sqlalchemy.exc import IntegrityError
+from app import app, db
+from app.models import Post, User
+
 
 # List of music links used for filtering all possible links under the posts
 MUSIC_LINKS = ["soundcloud", "spotify", "applemusic", "bandcamp", "telegram", "youtube", "vk", "archive"]
@@ -38,11 +43,40 @@ def get_properties(plain_text):
     if len(list(set(links) & set(MUSIC_LINKS))) > 0:
         title = strings[0]
         tags = "|".join(strings[1].replace(" ", "").split('#')[1:])
-        content = "\n".join(strings[2:-1])[2:]
+        content = "\n".join(strings[2:-1])[1:]
         return title, tags, content
 
     else:
         return '', '', ''
+
+
+def pandas2sql(post, user, database):
+
+    if type(post.edited) == str:
+        edited = datetime.datetime.strptime(post.edited, '%Y-%m-%dT%H:%M:%S')
+    else:
+        edited = datetime.datetime.min
+
+    post = Post(
+        title=post.title,
+        body=post.text,
+        tags=post.tags,
+        image=post.photo,
+        width=post.width,
+        height=post.height,
+        date=datetime.datetime.strptime(post.date, '%Y-%m-%dT%H:%M:%S'),
+        edited=edited,
+        author=user
+    )
+
+    try:
+        db.session.add(post)
+        db.session.commit()
+
+    except:
+        db.session.rollback()
+
+
 
 
 def main():
@@ -55,11 +89,13 @@ def main():
     as a table in a SQLite database.
     """
 
-    # Parse arguments from command line
-    parser = argparse.ArgumentParser(description=
-                                     "Reads JSON from <<World Music Geek>> Telegram channel and returns SQL database")
-    parser.add_argument('-p', '--path', help="Path to exported Telegram JSON", required=True)
-    args = vars(parser.parse_args())
+    # # Parse arguments from command line
+    # parser = argparse.ArgumentParser(description=
+    #                                  "Reads JSON from <<World Music Geek>> Telegram channel and returns SQL database")
+    # parser.add_argument('-p', '--path', help="Path to exported Telegram JSON", required=True)
+    # args = vars(parser.parse_args())
+
+    args = {'path': '/home/wassilyminkow/Develop/data/ChatExport/result.json'}
 
     # Get input path and generates output path
     input = args['path']
@@ -81,10 +117,17 @@ def main():
     df['title'] = properties.apply(lambda x: x[0])
     df['tags'] = properties.apply(lambda x: x[1])
     df['text'] = properties.apply(lambda x: x[2])
+    df = df[df['tags'] != '']
 
     # Create SQLite database engine and save the DataFrame as a table in the database
-    engine = create_engine(f'sqlite:////{output}', echo=False)
-    df.to_sql('posts', con=engine)
+    # engine = create_engine(f'sqlite:////{output}', echo=False)
+    # df.to_sql('posts', con=engine)
+
+    app.app_context().push()
+    u = User.query.get(1)
+    for index, row in df.iterrows():
+        pandas2sql(post=row, user=u, database=db)
+    db.session.close()
 
 
 if __name__ == "__main__":

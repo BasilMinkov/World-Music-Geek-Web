@@ -3,21 +3,18 @@ from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Post
 
 @app.route('/')
 @app.route('/blog')
 def blog():
 
-    with open('app/static/posts.json') as file:
-        posts_dict = json.load(file)
-    
     posts = []
-    for key, value in posts_dict.items():
-        posts.append(value)
-    
-    # return render_template("blog.html", title="Blog", posts=posts)
-    return '{ name: "karen"}'
+
+    for post in Post.query.all():
+        posts.append(post.as_dict())
+
+    return json.dumps({'posts': posts}, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 @app.route('/login', methods=['GET', 'POST'])
