@@ -29,14 +29,21 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140))
+    title = db.Column(db.String(300), unique=True)
     body = db.Column(db.String(6000))
+    tags = db.Column(db.String(140))
     image = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    width = db.Column(db.Integer)
+    height = db.Column(db.Integer)
+    date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    edited = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.title)
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 @login.user_loader
