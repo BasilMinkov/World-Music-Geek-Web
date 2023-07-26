@@ -72,11 +72,8 @@ def pandas2sql(post, user, database):
     try:
         db.session.add(post)
         db.session.commit()
-
     except:
         db.session.rollback()
-
-
 
 
 def main():
@@ -124,6 +121,11 @@ def main():
     # df.to_sql('posts', con=engine)
 
     app.app_context().push()
+
+    # u = User(username="Wassily Minkow", email="proveyourselfmail@gmail.com")
+    # db.session.add(u)
+    # db.session.commit()
+
     u = User.query.get(1)
     for index, row in df.iterrows():
         pandas2sql(post=row, user=u, database=db)

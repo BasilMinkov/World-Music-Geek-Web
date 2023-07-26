@@ -5,13 +5,17 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 
+
 @app.route('/')
 @app.route('/blog')
 def blog():
 
-    posts = []
+    page = request.args.get('page', 1, type=int)
+    query = Post.query.order_by(Post.date.desc()).paginate(
+        page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
 
-    for post in Post.query.all():
+    posts = []
+    for post in query:
         posts.append(post.as_dict())
 
     return json.dumps({'posts': posts}, indent=4, sort_keys=True, default=str, ensure_ascii=False)
