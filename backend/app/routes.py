@@ -6,19 +6,25 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 
 
-@app.route('/')
-@app.route('/blog')
-def blog():
+# @app.route('/')
+@app.route('/posts')
+def posts():
 
     page = request.args.get('page', 1, type=int)
     query = Post.query.order_by(Post.date.desc()).paginate(
         page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
 
-    posts = []
-    for post in query:
-        posts.append(post.as_dict())
+    if query.has_next:
+        url_for('posts', page=query.next_num)
 
-    return json.dumps({'posts': posts}, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    if query.has_prev:
+        url_for('posts', page=query.prev_num)
+
+    extracted_posts = []
+    for post in query:
+        extracted_posts.append(post.as_dict())
+
+    return json.dumps({'posts': extracted_posts}, indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
 
 @app.route('/login', methods=['GET', 'POST'])
