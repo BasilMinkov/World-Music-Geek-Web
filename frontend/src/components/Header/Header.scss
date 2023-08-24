@@ -1,31 +1,29 @@
+@import '../../scss/variables.scss';
+
 .header {
+
+    margin: 0 auto;
+
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
 
+    width: 100%;
+    max-width: 1440px;
+
+    max-height: $headerHeight;
+    height: $headerHeight;
+
+    padding: 0 2rem;
+
+
     &__logo-container {
-        img {
-            height: 80px;
-
-        }
-    }
-
-    &__nav {
-        display: grid;
-        column-gap: 1.5rem;
-        grid-template-columns: auto auto;
-        justify-content: center;
-
         a {
-            text-decoration: none;
+            display: inline-grid;
+
+            img {
+                height: 50px;
+            }
         }
-    }
-
-    .active {
-        color: #000;
-    }
-
-    .pending {
-        color: rgba(0, 0, 0, 0.3);
     }
 }

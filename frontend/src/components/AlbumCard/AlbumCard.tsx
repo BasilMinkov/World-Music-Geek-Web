@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './AlbumCard.scss'
 import { useNavigate } from 'react-router'
 
 interface IAlbumCard {
-    imageLink: string
-    title: string
-    author: string
-    postId: string
+    imageLink: any
+    title: any
+    author?: any
+    postId: any
 }
 
 const AlbumCard: React.FC<IAlbumCard> = (props) => {
@@ -24,7 +24,8 @@ const AlbumCard: React.FC<IAlbumCard> = (props) => {
                 onClick={handleClick}
                 title={`Перейти к посту о ${title}`}
             >
-                <img src={imageLink} alt="" />
+                {/* /Users/karen/Documents/Github/World-Music-Geek-Web/frontend/src/assets/images/photos */}
+                {/* <img src={link !== "" ? require(link) : ""} alt="" /> */}
             </div>
             <div className="albumCard__desc">
                 <div className="albumCard__desc__title">

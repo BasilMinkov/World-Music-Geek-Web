@@ -1,0 +1,20 @@
+$color-black: #131415;
+$color-grey: #B2B2B2;
+$color-yellow: #DFF308;
+$color-white: #FFFFFF;
+$color-disabled: rgba($color: $color-black, $alpha: 0.3);
+
+$transition-time: 300ms;
+
+$halfGap: 0.385rem;
+$gap: 0.75rem;
+$doubleGap: 1.5rem;
+
+$desktop: 1280px;
+$largeTablet: 992px;
+$smallTablet: 768px;
+
+$headerHeight: 60px;
+
+// z-index
+$z-header: 9;

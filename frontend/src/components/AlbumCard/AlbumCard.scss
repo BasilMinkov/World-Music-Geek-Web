@@ -4,11 +4,11 @@
     grid-template-rows: auto 1fr;
     row-gap: .75rem;
 
-
     &__image {
         width: 220px;
         height: 220px;
         cursor: pointer;
+        background: #eee;
 
         img {
             max-width: 100%;
