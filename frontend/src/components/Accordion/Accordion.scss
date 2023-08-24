@@ -1,0 +1,83 @@
+@import '../../scss/variables.scss';
+@import '../../scss/general.scss';
+
+.accordion {
+    width: 100%;
+    overflow: hidden;
+
+    &__title {
+        user-select: none;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        height: 2rem;
+        line-height: 2rem;
+
+        &--gradient {
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                bottom: -2rem;
+                left: 0;
+                height: 2rem;
+                width: 100%;
+                background: linear-gradient(to bottom, white, transparent);
+            }
+        }
+
+    }
+
+    &__body {
+        max-height: 8rem;
+        overflow: auto;
+        scrollbar-width: none;
+
+        &--open {
+            display: grid;
+            grid-template-rows: 1fr;
+            height: auto;
+            opacity: 1;
+            transition: $transition-time;
+            animation: expand 1s forwards;
+        }
+
+        &--closed {
+            display: grid;
+            height: 0;
+            grid-template-rows: 0;
+            opacity: 0;
+            transition: $transition-time;
+        }
+
+    }
+
+    &__icon {
+
+        &--open {
+            transition: $transition-time;
+            transform: rotate(0deg);
+        }
+
+        &--closed {
+            transition: $transition-time;
+            transform: rotate(180deg);
+        }
+
+    }
+}
+
+@keyframes expand {
+    0% {
+        grid-template-rows: 0;
+    }
+
+    100% {
+        grid-template-rows: 1fr;
+    }
+}

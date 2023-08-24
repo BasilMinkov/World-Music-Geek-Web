@@ -1,0 +1,27 @@
+.nav {
+    display: grid;
+    column-gap: 1.5rem;
+    grid-template-columns: auto auto;
+    justify-content: center;
+
+    a {
+        text-decoration: none;
+    }
+
+    &__header {
+
+    }
+
+    &__footer {
+        justify-content: flex-start;
+        column-gap: 40px;
+    }
+}
+
+.active {
+    color: #000;
+}
+
+.pending {
+    color: rgba(0, 0, 0, 0.3);
+}

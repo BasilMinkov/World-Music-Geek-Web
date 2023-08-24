@@ -1,19 +1,36 @@
+@import '../../scss/variables.scss';
+
 .button {
-    padding: .75rem 2rem;
+    padding: 0.5rem 1.5rem;
     font-size: 1rem;
-    color: black;
-    background-color: none;
-    border: none;
+    font-weight: bold;
+    border-radius: 40px;
+    color: $color-black;
+    background-color: transparent;
+    border: 2px solid $color-black;
     cursor: pointer;
+    max-height: 3rem;
 
-    &--transparent {
-        border: 2px solid black;
-        background-color: white;
-        transition: 500ms;
-
+    @media screen and (min-width: $desktop) {
         &:hover {
-            color: white;
-            background-color: black;
+            color: $color-black;
+            background-color: $color-yellow;
         }
+    }
+
+    &:not(:active) {
+        transition: $transition-time;
+    }
+
+    &:active {
+        background-color: $color-black;
+        color: $color-yellow;
+    }
+
+    &:disabled {
+        color: $color-disabled;
+        border-color: $color-disabled;
+        background-color: transparent;
+        cursor: not-allowed;
     }
 }

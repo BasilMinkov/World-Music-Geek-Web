@@ -10,13 +10,15 @@ const Layout: React.FC<ILayout> = (props) => {
     const { children } = props
 
     return (
-        <div className="container">
+        <>
             <Header />
-            <main className="main">
-                {children}
-            </main>
+            <div className="container">
+                <main className="main">
+                    {children}
+                </main>
+            </div>
             <Footer />
-        </div>
+        </>
     )
 }
 

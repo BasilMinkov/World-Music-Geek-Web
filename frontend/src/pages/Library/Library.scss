@@ -1,27 +1,63 @@
+@import '../../scss/variables.scss';
+
 .library {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 4fr 8fr;
+    column-gap: 1rem;
     min-height: 100vh;
-    padding: 0 250px 0 290px;
+    padding: 0 250px;
 
     &__sidebar {
         ul {
+            padding-top: calc($headerHeight * 0.5);
             width: 200px;
             list-style-type: none;
             display: grid;
-            row-gap: .75rem;
+            row-gap: 0.75rem;
 
             li {
+                cursor: pointer;
                 text-align: left;
                 font-weight: 700;
-                line-height: 32px;
+                line-height: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
             }
         }
+    }
+
+    &__main {
+        display: grid;
+        row-gap: 30px;
     }
 
     &__album-container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 1rem;
+    }
+    
+    &__mock {
+        display: grid;
+        row-gap: 7px;
+
+        &__image {
+            width: 220px;
+            height: 220px;
+            background-color: #F1F1F1;
+        }
+
+        &__author {
+            height: 16px;
+            width: 137px;
+            background-color: #F1F1F1;
+        }
+
+        &__title {
+            width: 202px;
+            height: 8px;
+            background-color: #F1F1F1;
+        }
     }
 }
