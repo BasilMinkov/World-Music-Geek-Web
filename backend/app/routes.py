@@ -7,25 +7,43 @@ from app.models import User, Post
 
 
 # @app.route('/')
-@app.route('/posts')
+@app.route('/posts', methods=['GET'])
 def posts():
 
-    page = request.args.get('page', 1, type=int)
+    host = request.host
+    page = request.args.get('page', default=1, type=int)
+    page_size = request.args.get('page_size', default=25, type=int)
+    total = Post.query.count()
     query = Post.query.order_by(Post.date.desc()).paginate(
-        page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+        page=page,
+        per_page=page_size,
+        error_out=False)
 
-    if query.has_next:
-        url_for('posts', page=query.next_num)
-
-    if query.has_prev:
-        url_for('posts', page=query.prev_num)
 
     extracted_posts = []
     for post in query:
         extracted_posts.append(post.as_dict())
 
-    return json.dumps({'posts': extracted_posts}, indent=4, sort_keys=True, default=str, ensure_ascii=False)
+    return json.dumps(
+        {
+        'total': total,
+        'next_page': f'{host}{url_for("posts", page=query.next_num)}' if query.has_next else None,
+        'prev_page': f'{host}{url_for("posts", page=query.prev_num)}' if query.has_prev else None,
+        'posts': extracted_posts,
+        },
+        indent=4, sort_keys=True, default=str, ensure_ascii=False)
 
+
+@app.route('/post', methods=['GET'])
+def post():
+    post_id = request.args.get('id', type=int)
+    query = Post.query.get(post_id)
+
+    return json.dumps(
+        {
+        'post': query.as_dict(),
+        },
+        indent=4, default=str, ensure_ascii=False)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
