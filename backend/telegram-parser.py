@@ -3,7 +3,9 @@
 import os
 import json
 import datetime
+import re
 import argparse
+import warnings
 
 import pandas as pd
 # from sqlalchemy import create_engine
@@ -13,11 +15,14 @@ from app.models import Post, User
 
 
 # List of music links used for filtering all possible links under the posts
-MUSIC_LINKS = ["soundcloud", "spotify", "applemusic", "bandcamp", "telegram", "youtube", "vk", "archive"]
+MUSIC_LINKS = ["Soundcloud", "Spotify", "AppleMusic", "Bandcamp", "Telegram", "Youtube", "VK", "Archive"]
 
 
 def get_plain_text(text_with_json):
     # Extracts plain text from the provided text with json parts
+
+    if type(text_with_json) == str:
+        return text_with_json
 
     plain_text = str()
 
@@ -25,12 +30,72 @@ def get_plain_text(text_with_json):
         element_type = type(element)
         if element_type is str:
             plain_text += element
+
         elif element_type is dict:
-            plain_text += element['text']
+
+            if element['type'] == 'text_link':
+                plain_text += f'[{element["text"]}]({element["href"]})'
+            elif element['type'] == 'bold':
+                plain_text += f'__{element["text"]}__'
+            elif element['type'] == 'italic':
+                plain_text += f'_{element["text"]}_'
+            elif element['type'] == 'code':
+                plain_text += f'`{element["text"]}`'
+            else:
+                plain_text += element["text"]
         else:
-            print(element_type)
+            print('WARNING! Do not know what to do with ', element_type)
 
     return plain_text
+
+
+def process_title(string):
+
+    target = ''
+    result = 1e6
+
+    # Split post by dash of multiple types
+    for dash in ['—', '–', '-']:
+        index = string.find(dash)
+
+        if (index >= 0) and (result > index):
+            result = index
+            target = dash
+
+    if 1e6 > result > 0:
+
+        print(target)
+
+        # Find author name
+        result = string.split(target)
+        author = result[0].strip()
+
+        # Find album name
+        result = target.join(result[1:])
+        album = result[0:result.find('(')]
+
+        # Find year
+        result = result[result.find('(')+1:-1].split(',')
+        try:
+            year = int(result[-1][-4:])
+        except ValueError:
+            year = ''
+
+        # Find label
+        if len(result) > 1:
+            result = result[0]
+            if result.find('[') > -1:
+                label = result[result.find('[')+1: result.find(']')]
+            else:
+                label = result
+        else:
+            label = ''
+
+        return author, album, label, year
+
+    else:
+        warnings.warn("No dash in first string. Must be not album post", Warning)
+        return None
 
 
 def get_properties(plain_text):
@@ -38,16 +103,22 @@ def get_properties(plain_text):
 
     strings = plain_text.split('\n')
 
-    links = strings[-1].lower().replace(" ", "").split('|')
+    # Find all matches using re.findall
+    links = re.findall(r'\[(.*?)\]', strings[-1])
 
     if len(list(set(links) & set(MUSIC_LINKS))) > 0:
-        title = strings[0]
+        print('\n', strings[0])
+        result = process_title(strings[0])
+        if result:
+            author, album, label, year = result[0], result[1], result[2], result[3]
+        else:
+            return '', '', '', '', '', ''
+        print(author, '|', album, '|', label, '|', year)
         tags = "|".join(strings[1].replace(" ", "").split('#')[1:])
         content = "\n".join(strings[2:-1])[1:]
-        return title, tags, content
-
+        return author, album, label, year, tags, content
     else:
-        return '', '', ''
+        return '', '', '', '', '', ''
 
 
 def pandas2sql(post, user, database):
@@ -58,7 +129,10 @@ def pandas2sql(post, user, database):
         edited = datetime.datetime.min
 
     post = Post(
-        title=post.title,
+        artist=post.author,
+        album=post.album,
+        label=post.label,
+        year=post.year,
         body=post.text,
         tags=post.tags,
         image=post.photo,
@@ -72,6 +146,7 @@ def pandas2sql(post, user, database):
     try:
         db.session.add(post)
         db.session.commit()
+
     except:
         db.session.rollback()
 
@@ -111,9 +186,12 @@ def main():
 
     # Extract properties (title, tags, and content) using helper functions
     properties = df['text'].apply(lambda x: get_properties(get_plain_text(x)))
-    df['title'] = properties.apply(lambda x: x[0])
-    df['tags'] = properties.apply(lambda x: x[1])
-    df['text'] = properties.apply(lambda x: x[2])
+    df['author'] = properties.apply(lambda x: x[0])
+    df['album'] = properties.apply(lambda x: x[1])
+    df['label'] = properties.apply(lambda x: x[2])
+    df['year'] = properties.apply(lambda x: x[3])
+    df['tags'] = properties.apply(lambda x: x[4])
+    df['text'] = properties.apply(lambda x: x[5])
     df = df[df['tags'] != '']
 
     # Create SQLite database engine and save the DataFrame as a table in the database
@@ -122,11 +200,8 @@ def main():
 
     app.app_context().push()
 
-    # u = User(username="Wassily Minkow", email="proveyourselfmail@gmail.com")
-    # db.session.add(u)
-    # db.session.commit()
+    u = User(username="Wassily Minkow", email="proveyourselfmail@gmail.com")
 
-    u = User.query.get(1)
     for index, row in df.iterrows():
         pandas2sql(post=row, user=u, database=db)
     db.session.close()

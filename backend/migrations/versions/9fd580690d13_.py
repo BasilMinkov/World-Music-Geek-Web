@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ba8be43baefd
+Revision ID: 9fd580690d13
 Revises: 
-Create Date: 2023-07-22 22:19:15.547414
+Create Date: 2023-09-07 11:44:23.509114
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ba8be43baefd'
+revision = '9fd580690d13'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,7 +29,10 @@ def upgrade():
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=300), nullable=True),
+    sa.Column('artist', sa.String(length=300), nullable=True),
+    sa.Column('album', sa.String(length=300), nullable=True),
+    sa.Column('label', sa.String(length=300), nullable=True),
+    sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('body', sa.String(length=6000), nullable=True),
     sa.Column('tags', sa.String(length=140), nullable=True),
     sa.Column('image', sa.String(length=140), nullable=True),
@@ -39,8 +42,7 @@ def upgrade():
     sa.Column('edited', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('title')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_post_date'), 'post', ['date'], unique=False)
     op.create_index(op.f('ix_post_edited'), 'post', ['edited'], unique=False)
