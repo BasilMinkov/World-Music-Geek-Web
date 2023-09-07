@@ -1,37 +1,61 @@
 import json
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
+from sqlalchemy import or_  # Import 'or_' for filter conditions
+from app.utils import modify_dict
+from constants import COUNTRIES_MAP
 
-
-# @app.route('/')
 @app.route('/posts', methods=['GET'])
 def posts():
-
     host = request.host
     page = request.args.get('page', default=1, type=int)
     page_size = request.args.get('page_size', default=25, type=int)
+    tag_filter = request.args.get('tag', default=None, type=str)
+    artist_filter = request.args.get('artist', default=None, type=str)
+    year_filter = request.args.get('year', default=None, type=int)
+    album_filter = request.args.get('album', default=None, type=str)
+    label_filter = request.args.get('label', default=None, type=str)
     total = Post.query.count()
-    query = Post.query.order_by(Post.date.desc()).paginate(
+
+    # Construct the base query
+    base_query = Post.query.order_by(Post.date.desc())
+
+    # Apply filters if provided
+    if tag_filter:
+        base_query = base_query.filter(Post.tags.like(f"%{tag_filter}%"))
+
+    if artist_filter:
+        base_query = base_query.filter(Post.artist == artist_filter)
+
+    if year_filter:
+        base_query = base_query.filter(Post.year == year_filter)
+
+    if album_filter:
+        base_query = base_query.filter(Post.album == album_filter)
+
+    if label_filter:
+        base_query = base_query.filter(Post.label == label_filter)
+
+    query = base_query.paginate(
         page=page,
         per_page=page_size,
         error_out=False)
 
-
     extracted_posts = []
-    for post in query:
-        extracted_posts.append(post.as_dict())
+    for post in query.items:  # Use query.items to iterate over the paginated results
+        extracted_posts.append(modify_dict(post.as_dict()))
 
-    return json.dumps(
+    return jsonify(
         {
-        'total': total,
-        'next_page': f'{host}{url_for("posts", page=query.next_num)}' if query.has_next else None,
-        'prev_page': f'{host}{url_for("posts", page=query.prev_num)}' if query.has_prev else None,
-        'posts': extracted_posts,
-        },
-        indent=4, sort_keys=True, default=str, ensure_ascii=False)
+            'total': total,
+            'next_page': f'{host}{url_for("posts", page=query.next_num)}' if query.has_next else None,
+            'prev_page': f'{host}{url_for("posts", page=query.prev_num)}' if query.has_prev else None,
+            'posts': extracted_posts,
+        }
+    )
 
 
 @app.route('/post', methods=['GET'])
@@ -44,6 +68,26 @@ def post():
         'post': query.as_dict(),
         },
         indent=4, default=str, ensure_ascii=False)
+
+
+@app.route('/countries', methods=['GET'])
+def countries():
+
+    # Construct the base query
+    base_query = Post.query.order_by()
+
+    countries_dict = dict()
+    for key, value in COUNTRIES_MAP.items():
+        countries_dict[key] = {
+            'albums': base_query.filter(Post.tags.like(f"%{value}%")).count()
+        }
+
+    return jsonify(
+        {
+            'values': countries_dict,
+        }
+    )
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

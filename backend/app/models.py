@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from hashlib import md5
 
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -29,7 +29,10 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(300), unique=True)
+    artist = db.Column(db.String(300))
+    album = db.Column(db.String(300))
+    label = db.Column(db.String(300))
+    year = db.Column(db.Integer)
     body = db.Column(db.String(6000))
     tags = db.Column(db.String(140))
     image = db.Column(db.String(140))
@@ -37,10 +40,18 @@ class Post(db.Model):
     height = db.Column(db.Integer)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     edited = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    applemusic = db.Column(db.String(300))
+    bandcamp = db.Column(db.String(300))
+    other = db.Column(db.String(300))
+    soundcloud = db.Column(db.String(300))
+    spotify = db.Column(db.String(300))
+    telegram = db.Column(db.String(300))
+    vk = db.Column(db.String(300))
+    youtube = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<Post {}>'.format(self.title)
+        return '<Post {} - {}>'.format(self.artist, self.album)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
