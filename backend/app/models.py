@@ -40,6 +40,14 @@ class Post(db.Model):
     height = db.Column(db.Integer)
     date = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     edited = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    applemusic = db.Column(db.String(300))
+    bandcamp = db.Column(db.String(300))
+    other = db.Column(db.String(300))
+    soundcloud = db.Column(db.String(300))
+    spotify = db.Column(db.String(300))
+    telegram = db.Column(db.String(300))
+    vk = db.Column(db.String(300))
+    youtube = db.Column(db.String(300))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):

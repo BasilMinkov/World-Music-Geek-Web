@@ -112,13 +112,41 @@ def get_properties(plain_text):
         if result:
             author, album, label, year = result[0], result[1], result[2], result[3]
         else:
-            return '', '', '', '', '', ''
+            return '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
         print(author, '|', album, '|', label, '|', year)
         tags = "|".join(strings[1].replace(" ", "").split('#')[1:])
         content = "\n".join(strings[2:-1])[1:]
-        return author, album, label, year, tags, content
+
+        links = dict()
+        for element in strings[-1].split('|'):
+            processed = False
+
+            for link in MUSIC_LINKS:
+                if element[element.find('[')+1:element.find(']')].lower() == link.lower():
+                    if link.lower() == 'archive':
+                        links['telegram'] = element[element.find('(')+1:element.find(')')]
+                        processed = True
+                    else:
+                        links[link.lower()] = element[element.find('(')+1:element.find(')')]
+                        processed = True
+
+            if not processed:
+                links['other'] = element[element.find('('):element.find(')')]
+
+        for link in (MUSIC_LINKS + ['other']):
+            if link.lower() not in links:
+                if link.lower() == 'archive':
+                    links['telegram'] = str()
+                else:
+                    links[link.lower()] = str()
+
+        # key = list(map(lambda x: x.lower(), MUSIC_LINKS))[:-1] + ['other']
+
+        links = dict(sorted(links.items())).values()
+
+        return author, album, label, year, tags, content, links, *links
     else:
-        return '', '', '', '', '', ''
+        return '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
 
 
 def pandas2sql(post, user, database):
@@ -140,7 +168,15 @@ def pandas2sql(post, user, database):
         height=post.height,
         date=datetime.datetime.strptime(post.date, '%Y-%m-%dT%H:%M:%S'),
         edited=edited,
-        author=user
+        author=user,
+        applemusic=post.applemusic,
+        bandcamp=post.bandcamp,
+        other=post.other,
+        soundcloud=post.soundcloud,
+        spotify=post.spotify,
+        telegram=post.telegram,
+        vk=post.vk,
+        youtube=post.youtube
     )
 
     try:
@@ -192,6 +228,10 @@ def main():
     df['year'] = properties.apply(lambda x: x[3])
     df['tags'] = properties.apply(lambda x: x[4])
     df['text'] = properties.apply(lambda x: x[5])
+
+    for id, link in enumerate(sorted(list(map(lambda x: x.lower(), MUSIC_LINKS[:-1])) + ['other'])):
+        df[link.lower()] = properties.apply(lambda x: x[7+id])
+
     df = df[df['tags'] != '']
 
     # Create SQLite database engine and save the DataFrame as a table in the database

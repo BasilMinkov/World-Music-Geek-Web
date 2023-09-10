@@ -5,7 +5,8 @@ from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from sqlalchemy import or_  # Import 'or_' for filter conditions
-
+from app.utils import modify_dict
+from constants import COUNTRIES_MAP
 
 @app.route('/posts', methods=['GET'])
 def posts():
@@ -45,7 +46,7 @@ def posts():
 
     extracted_posts = []
     for post in query.items:  # Use query.items to iterate over the paginated results
-        extracted_posts.append(post.as_dict())
+        extracted_posts.append(modify_dict(post.as_dict()))
 
     return jsonify(
         {
@@ -67,6 +68,26 @@ def post():
         'post': query.as_dict(),
         },
         indent=4, default=str, ensure_ascii=False)
+
+
+@app.route('/countries', methods=['GET'])
+def countries():
+
+    # Construct the base query
+    base_query = Post.query.order_by()
+
+    countries_dict = dict()
+    for key, value in COUNTRIES_MAP.items():
+        countries_dict[key] = {
+            'albums': base_query.filter(Post.tags.like(f"%{value}%")).count()
+        }
+
+    return jsonify(
+        {
+            'values': countries_dict,
+        }
+    )
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
