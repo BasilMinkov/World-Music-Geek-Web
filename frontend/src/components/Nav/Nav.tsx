@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import './Nav.scss'
 
 interface INav {
@@ -7,13 +7,13 @@ interface INav {
 }
 
 const Nav: React.FC<INav> = (props) => {
-    const { location } = props
+    const {location} = props
     return (
         <nav className={`nav nav__${location}`}>
             <NavLink
                 to="/blog"
 
-                className={({ isActive, isPending }) =>
+                className={({isActive, isPending}) =>
                     isActive ? "active" : "pending"
                 }
             >
@@ -21,11 +21,19 @@ const Nav: React.FC<INav> = (props) => {
             </NavLink>
             <NavLink
                 to="/library"
-                className={({ isActive, isPending }) =>
+                className={({isActive, isPending}) =>
                     isActive ? "active" : "pending"
                 }
             >
                 library
+            </NavLink>
+            <NavLink
+                to="/map"
+                className={({isActive, isPending}) =>
+                    isActive ? "active" : "pending"
+                }
+            >
+                map
             </NavLink>
         </nav>
     )
