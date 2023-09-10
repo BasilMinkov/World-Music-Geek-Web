@@ -34,3 +34,9 @@
     padding-top: calc($headerHeight * 1.5);
     min-height: 100dvh;
 }
+
+a {
+    color: $color-black;
+    text-underline-offset: .2rem;
+    text-decoration-thickness: .8px;
+}

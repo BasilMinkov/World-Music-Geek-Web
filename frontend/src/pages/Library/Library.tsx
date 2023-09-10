@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect} from 'react'
 import Layout from '../../hoc/Layout'
 import AlbumCard from '../../components/AlbumCard/AlbumCard'
 import MockAlbum from './views/MockAlbum/MockAlbum'
 import axios from 'axios'
 import Accordion from '../../components/Accordion/Accordion'
 import './Library.scss'
+import {IPost} from "../../types"
+import {useParams} from 'react-router'
 
 import Button from '../../components/Button/Button'
-
-interface IPost {
-    body: string
-    date: string
-    edited: string
-    height: number
-    id: number
-    image: string
-    tags: string
-    title: string
-    user_id: number
-    width: number
-}
 
 const Library: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -28,14 +17,17 @@ const Library: React.FC = () => {
     const [posts, setPosts] = useState<IPost[]>([])
     const [limit, setLimit] = useState<number>(12)
     const [page, setPage] = useState<number>(1)
+    const [query, setQuery] = useState('')
 
     useEffect(() => {
+        const query = new URLSearchParams(window.location.search).toString();
+        console.log('query', query)
         setIsLoading(true)
         axios.get(
-            `http://127.0.0.1:5000/posts?page=${page}&page_size=${limit}`
+            `http://127.0.0.1:5000/posts?page=${page}&page_size=${limit}&${query}`
         )
             .then((response) => {
-                console.log('response', response?.data?.posts)
+                // console.log('response', response)
                 setPosts((prev) => {
                     return response?.data?.posts
                 })
@@ -130,9 +122,10 @@ const Library: React.FC = () => {
                                 return (
                                     <AlbumCard
                                         imageLink={post?.image}
-                                        title={post?.title}
-                                        // author={post.author}
                                         postId={post?.id}
+                                        artist={post?.artist}
+                                        album={post?.album}
+                                        label={post?.label}
                                         key={index}
                                     />
                                 )
@@ -142,7 +135,7 @@ const Library: React.FC = () => {
                     {
                         isLoading &&
                         <div className="library__album-container">
-                            <MockAlbum limit={limit} />
+                            <MockAlbum limit={limit}/>
                         </div>
                     }
                     {
