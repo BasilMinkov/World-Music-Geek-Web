@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ba8be43baefd
+Revision ID: 252cf16c01b3
 Revises: 
-Create Date: 2023-07-22 22:19:15.547414
+Create Date: 2023-09-10 00:54:56.215919
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ba8be43baefd'
+revision = '252cf16c01b3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,7 +29,10 @@ def upgrade():
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=300), nullable=True),
+    sa.Column('artist', sa.String(length=300), nullable=True),
+    sa.Column('album', sa.String(length=300), nullable=True),
+    sa.Column('label', sa.String(length=300), nullable=True),
+    sa.Column('year', sa.Integer(), nullable=True),
     sa.Column('body', sa.String(length=6000), nullable=True),
     sa.Column('tags', sa.String(length=140), nullable=True),
     sa.Column('image', sa.String(length=140), nullable=True),
@@ -37,10 +40,17 @@ def upgrade():
     sa.Column('height', sa.Integer(), nullable=True),
     sa.Column('date', sa.DateTime(), nullable=True),
     sa.Column('edited', sa.DateTime(), nullable=True),
+    sa.Column('applemusic', sa.String(length=300), nullable=True),
+    sa.Column('bandcamp', sa.String(length=300), nullable=True),
+    sa.Column('other', sa.String(length=300), nullable=True),
+    sa.Column('soundcloud', sa.String(length=300), nullable=True),
+    sa.Column('spotify', sa.String(length=300), nullable=True),
+    sa.Column('telegram', sa.String(length=300), nullable=True),
+    sa.Column('vk', sa.String(length=300), nullable=True),
+    sa.Column('youtube', sa.String(length=300), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('title')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_post_date'), 'post', ['date'], unique=False)
     op.create_index(op.f('ix_post_edited'), 'post', ['edited'], unique=False)
