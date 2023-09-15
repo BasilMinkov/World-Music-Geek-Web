@@ -31,6 +31,9 @@ brew install orbstack
 
 ## Running
 
+- Put *app.db* and *photos* folder in the root of the repo
+  then run
+
 ```sh
 docker compose up
 ```
