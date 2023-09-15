@@ -1,17 +1,14 @@
-FROM cgr.dev/chainguard/wolfi-base
+FROM debian:12-slim
+RUN apt-get update
 
 WORKDIR /app
 
-RUN adduser -D wmgeek
-RUN chown -R wmgeek.wmgeek /app/
-USER wmgeek
-
-RUN apk add python-3.10
+RUN apt install python3.10
 COPY backend /app/backend
 RUN pip3 install -r /app/backend/requirements.txt
 RUN pip3 install gunicorn
 
-RUN apk add npm
+RUN apt install npm
 COPY frontend /app/frontend
 
 COPY app.db /app/backend/
