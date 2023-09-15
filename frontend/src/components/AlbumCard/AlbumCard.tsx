@@ -25,7 +25,7 @@ const AlbumCard: React.FC<IAlbumCard> = (props) => {
                 title={`Перейти к посту о`}
             >
                 {/* /Users/karen/Documents/Github/World-Music-Geek-Web/frontend/src/assets/ */}
-                <img src={imageLink ? require(`./${imageLink}`) : ''} alt=""/>
+                <img src={imageLink} alt=""/>
             </div>
             <div className="albumCard__desc">
                 <div className="albumCard__desc__title">
