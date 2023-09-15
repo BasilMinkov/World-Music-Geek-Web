@@ -1,9 +1,11 @@
 FROM photon:latest
 
-WORKDIR /app
+WORKDIR /frontend
+
+ARG BACKEND_URL
 
 RUN tdnf install -y nodejs
-COPY frontend /app/frontend
-RUN cd /app/frontend && npm install
+COPY frontend /frontend
+RUN npm install
 
 ENTRYPOINT ["npm", "start"]

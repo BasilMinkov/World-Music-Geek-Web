@@ -29,11 +29,10 @@ const Post: React.FC = (props) => {
         }
     )
     const post_id = useParams()
-    const server_url = 'http://127.0.0.1:5000/'
             
     useEffect(() => {
         axios.get(
-            `http://127.0.0.1:5000/post?id=${post_id?.postId}`
+            `${process.env.BACKEND_URL}:5000/post?id=${post_id?.postId}`
         )
             .then((response) => {
                 const post = response?.data?.post
@@ -57,13 +56,12 @@ const Post: React.FC = (props) => {
     }, [post_id])
 
 
-    console.log(server_url + post.image)
     return (
         <Layout>
             <div className="post">
                 <div className="post__banner">
                     <div className="post__image">,
-                        <img src={server_url + post?.image} alt=""/>
+                        <img src={process.env.BACKEND_URL + post?.image} alt=""/>
                     </div>
                 </div>
                 <div className="post__content">
