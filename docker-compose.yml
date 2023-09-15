@@ -6,10 +6,9 @@ services:
       dockerfile: ./frontend/Dockerfile
     ports:
       - "8080:3000"
-    env_file:
-      - .env
     environment:
-      - BACKEND_URL=http://backend.world-music-geek-web.orb.local
+      - REACT_APP_BACKEND_URL=http://backend.world-music-geek-web.orb.local
+  
   backend:
     image: wmg-back
     build:

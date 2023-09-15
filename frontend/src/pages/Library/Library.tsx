@@ -18,16 +18,14 @@ const Library: React.FC = () => {
     const [limit, setLimit] = useState<number>(12)
     const [page, setPage] = useState<number>(1)
     const [query, setQuery] = useState('')
-    const backUrl = process.env.BACKEND_URL
+    const backUrl = process.env.REACT_APP_BACKEND_URL
 
-    console.log(backUrl)
-    
     useEffect(() => {
         const query = new URLSearchParams(window.location.search).toString();
         console.log('query', query)
         setIsLoading(true)
         const postsUrlQuery = backUrl + `:5000/posts?page=${page}&page_size=${limit}&${query}`
-        console.log(postsUrlQuery)
+        
         axios.get(postsUrlQuery)
             .then((response) => {
                 // console.log('response', response)
@@ -47,7 +45,6 @@ const Library: React.FC = () => {
         const nextPage = page + 1
         setPage(nextPage)
         const postsUrl = backUrl + `:5000/posts?page=${nextPage}&page_size=${limit}`
-        console.log(postsUrl)
         
         axios.get(postsUrl)
             .then((response) => {

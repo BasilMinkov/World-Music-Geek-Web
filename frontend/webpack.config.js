@@ -2,10 +2,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const Dotenv = require('dotenv-webpack')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { EnvironmentPlugin } = require('webpack');
 
 module.exports = {
     entry: {
@@ -101,8 +101,10 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new NodePolyfillPlugin(),
-        new Dotenv({
-            path: `./.env`,
+        new webpack.DefinePlugin({
+          'process.env': {
+              'REACT_APP_BACKEND_URL': JSON.stringify(process.env.REACT_APP_BACKEND_URL)
+             }
         }),
     ],
 }
