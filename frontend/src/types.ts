@@ -14,6 +14,9 @@ export interface IPost {
     date: string
     edited: string
     user_id: number | null
+    spotify: string
+    applemusic: string
+    bandcamp: string
 }
 
 

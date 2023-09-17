@@ -1,32 +1,46 @@
-import React from 'react'
-import './Header.scss'
-import logoHeader from '../../assets/images/logo.png'
-import Button from '../Button/Button'
-import { Link } from 'react-router-dom'
-import Nav from '../Nav/Nav'
+import React, { useState } from "react";
+import "./Header.scss";
+import Button from "../Button/Button";
+import BurgerIcon from "../../assets/images/burger-icon.svg";
+import Logo from "../Logo/Logo";
+import Menu from "../Menu/Menu";
+import Social from "../Social/Social";
 
 const Header: React.FC = (props) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
-    return (
-        <div className="container--header">
-            <header className="header">
-                <div className="header__logo-container">
-                    <Link to="/">
-                        <img src={logoHeader} alt="World Music Geek" />
-                    </Link>
-                </div>
-                <Nav location="header" />
-                <div className="button-container">
-                    <Button
-                        type="button"
-                        buttonType="transparent"
-                    >
-                        Donate
-                    </Button>
-                </div>
-            </header>
+  const handleClick = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
+  return (
+    <header className="header">
+      <div className="container">
+        <Logo />
+        <Menu position="header" />
+        <div className="header__donate-button">
+          <Button>Donate</Button>
         </div>
-    )
-}
+        <div className="header__burger-button">
+          <img src={BurgerIcon} onClick={handleClick} alt="" />
+        </div>
+        <div
+          className={`header__burger__wrapper ${
+            isMobileMenuOpen ? "burger-active" : ""
+          }`}
+        >
+          <div
+            className={`header__burger__menu ${
+              isMobileMenuOpen ? "burger-active" : ""
+            }`}
+          >
+            <Menu position="mobile" />
+            {/* <Social location="burger" /> */}
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+};
 
-export default Header
+export default Header;

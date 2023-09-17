@@ -4,8 +4,8 @@ import Blog from './pages/Blog/Blog';
 import Library from './pages/Library/Library';
 import Post from './pages/Post/Post';
 import Map from './pages/Map/Map'
-import './App.css';
 
+console.log(process.env)
 
 const App: React.FC = () => {
   return (
