@@ -2,41 +2,63 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Inter;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter;
 }
 
 .container {
-    max-width: 1440px;
-    padding: 0 1rem;
+
+  max-width: 100%;
+  padding: 0 1rem;
+
+
+  @media only screen and (min-width: $smallTablet) {
     margin: 0 auto;
+  }
 
-    &--header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
+  @media only screen and (min-width: $largeTablet) {
+    max-width: 85%;
+  }
 
-        width: 100%;
-        max-height: $headerHeight;
-        height: $headerHeight;
-        background-color: $color-white;
+  @media only screen and (min-width: $desktop) {
+    max-width: 1280px;
+  }
 
-        z-index: $z-header;
+  &--header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 
-        box-shadow: 0px 5px 5px #eee;
-    }
+    width: 100%;
+    max-height: $headerHeight;
+    height: $headerHeight;
+    background-color: $color-white;
+
+    z-index: $z-header;
+
+    box-shadow: 0px 5px 5px #eee;
+  }
 }
 
 .main {
-    padding-top: calc($headerHeight * 1.5);
-    min-height: 100dvh;
+  padding-top: calc($headerHeight * 1.5);
+  min-height: 100dvh;
 }
 
 a {
-    color: $color-black;
-    text-underline-offset: .2rem;
-    text-decoration-thickness: .8px;
+  color: $color-black;
+  text-underline-offset: .2rem;
+  text-decoration-thickness: .8px;
+}
+
+.active {
+  color: #000;
+  // color: #fff;
+}
+
+.pending {
+  color: $color-grey;
 }

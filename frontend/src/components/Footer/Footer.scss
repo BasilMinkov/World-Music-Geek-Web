@@ -1,17 +1,60 @@
 @import '../../scss/variables.scss';
 
 .footer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  padding: 2rem 0;
+
+  @media only screen and (min-width: $smallTablet) {
+    row-gap: unset;
+  }
+
+  &__logo {
+    max-width: 250px;
+
+    &-container {
+      display: flex;
+      justify-content: center;
+
+      a {
+
+        img {
+          &:first-child {
+            display: none;
+
+            @media only screen and (min-width: $smallTablet) {
+              display: unset;
+            }
+          }
+
+          &:last-child {
+            @media only screen and (min-width: $smallTablet) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &__organization {
+    text-align: center;
+
+    @media only screen and (min-width: $smallTablet) {
+      text-align: unset;
+    }
+
+    span {
+      color: $color-grey;
+    }
+  }
+
+  @media only screen and (min-width: $smallTablet) {
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: flex-end;
     padding: 1.5rem 0;
     column-gap: 40px;
-
-    &__logo-container {}
-
-    &__organization {
-        span {
-            color: $color-grey;
-        }
-    }
+  }
 }

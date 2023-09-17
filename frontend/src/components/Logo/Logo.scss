@@ -1,0 +1,25 @@
+@import '../../scss/variables.scss';
+
+.logo {
+    padding: 0 $gap;
+    height: 100%;
+    display: grid;
+    align-items: center;
+    width: min-content;
+
+    @media only screen and (min-width: $smallTablet) {
+        justify-content: unset;
+        justify-content: center;
+    }
+
+    a {
+        width: min-content;
+        height: 50px;
+
+        img {
+            height: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    }
+}
