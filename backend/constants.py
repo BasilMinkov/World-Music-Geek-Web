@@ -245,3 +245,95 @@ COUNTRIES_MAP = {
   'ZM': 'Zambia',
   'ZW': 'Zimbabwe'
 }
+
+GENRES = [
+    "afrobeat", "ambient", "aor", "assouf", "avantfolk", "baroque", "blues",
+    "boogie", "bossa_nova", "calypso", "chanson", "city_pop", "country",
+    "cumbia", "dhrupad", "disco", "drone", "dub", "electronic",
+    "folk", "funk", "gamelan", "gnawa", "house", "indie", "jazz", "joik",
+    "khyal", "minimal", "minyo", "new_age", "operetta", "pop", "psychedelic",
+    "qawwali", "raga", "reggae", "rock", "romance", "ryukoka", "soft_rock",
+    "soul", "spiritual", "surf", "surti", "synthpop", "takamba", "tango",
+    "techno", "thumri", "tishoumaren", "tribal", "vallenato", "wassoulou",
+    "yacht_rock", "yolgnu", "bollywood", "carnatic", "hindustani",
+    "persian_classical"
+]
+
+PEOPLES = ["mien", "mizrahi", "ngoni", "saami", "sepharadic", "tuareg", "yao"]
+
+INSTRUMENTS = [
+    "bulbul_tarang", "gayageum", "geomungo", "guembri", "harmonium",
+    "kendhang", "kora", "mbira", "ngoni", "qraqebs", "rubab",
+    "shakuhachi", "sintir", "soku", "tabla", "tambura"
+]
+
+LABELS = {
+    'label1': {
+        'name': 'Awesome Tapes From Africa',
+        'link': 'https://www.awesometapes.com/'
+    },
+    'label2': {
+        'name': 'Australian Art Orchestra',
+        'link': 'https://www.aao.com.au/releases'
+    },
+    'label3': {
+        'name': 'Batov Records',
+        'link': 'https://batovrecords.com/'
+    },
+    'label4': {
+        'name': 'Black Groove Music',
+        'link': 'https://blackgroove.in/'
+    },
+    'label5': {
+        'name': 'Sublime Frequencies',
+        'link': 'https://www.sublimefrequencies.com/'
+    },
+    'label6': {
+        'name': 'Smithsonian Folkways Recordings',
+        'link': 'https://folkways.si.edu/'
+    },
+    'label7': {
+        'name': 'Mushroom Hour Half Hour',
+        'link': 'https://www.mushroomhour.com/'
+    },
+    'label8': {
+        'name': 'United Sounds Of Asia',
+        'link': 'https://strut.k7store.com/nashenas'
+    },
+    'label9': {
+        'name': 'World Music Network',
+        'link': 'https://worldmusic.net/'
+    },
+    'label10': {
+        'name': 'Glitterbeat Records',
+        'link': 'https://glitterbeat.com/'
+    },
+    'label11': {
+        'name': 'Parseghian Records',
+        'link': 'https://www.discogs.com/label/182420-Parseghian-Records'
+    },
+    'label12': {
+        'name': 'DOM',
+        'link': 'https://www.discogs.com/label/99333-DOM-2'
+    },
+    'label13': {
+        'name': 'Dead Oceans',
+        'link': 'https://deadoceans.com/'
+    },
+    'label14': {
+        'name': 'Ostinato Records',
+        'link': 'https://www.ostinatorecords.com/'
+    },
+    'label15': {
+        'name': 'Daptone Records',
+        'link': 'https://daptonerecords.com/'
+    },
+    'label16': {
+        'name': 'Death Is Not The End',
+        'link': 'https://deathisnot.bandcamp.com/'
+    },
+    'label17': {
+        'name': 'Terrestrial Funk',
+        'link': 'https://terrestrialfunk.com/'
+    }
+}
