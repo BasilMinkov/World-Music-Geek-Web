@@ -1,8 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import footerLogo from '../../assets/images/wmg_logo_big.svg';
+import footerLogoFull from '../../assets/images/logo_full.svg'
 import './Footer.scss'
-import Nav from '../Nav/Nav';
+import Menu from '../Menu/Menu';
 
 const Footer: React.FC = (props) => {
 
@@ -12,9 +13,10 @@ const Footer: React.FC = (props) => {
                 <div className="footer__logo-container">
                     <Link to="/">
                         <img src={footerLogo} alt="" />
+                        <img src={footerLogoFull} alt="" />
                     </Link>
                 </div>
-                <Nav location="footer" />
+                <Menu position="footer" />
                 <div className="footer__organization">
                     <span>world music geek &copy;{String((new Date()).getFullYear())}</span>
                 </div>

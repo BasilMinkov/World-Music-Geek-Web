@@ -1,3 +1,12 @@
+@import '../../scss/variables.scss';
+
 .svgMap-map-wrapper {
   background: #FFFFFF;
+  padding-top: calc(100dvh - $headerHeight - 30px);
+
+  border: 1px solid #eee;
+}
+
+.svgMap-country {
+  cursor: pointer;
 }

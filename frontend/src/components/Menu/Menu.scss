@@ -1,0 +1,52 @@
+@import '../../scss/variables.scss';
+
+.menu {
+    display: grid;
+
+    &__header {
+        display: none;
+
+        @media only screen and (min-width: $smallTablet) {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(0, max-content));
+            column-gap: $gap;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__footer {
+        row-gap: $halfGap;
+        align-items: center;
+        display: grid;
+        grid-gap: $gap;
+        justify-content: center;
+
+        @media only screen and (min-width: $smallTablet) {
+            justify-content: flex-start;
+            grid-template-columns: repeat(auto-fit, minmax(0, max-content));
+        }
+
+        a {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    &__mobile {
+        display: grid;
+        row-gap: calc($doubleGap * 0.75);
+    }
+
+    a {
+        width: min-content;
+        text-decoration: none;
+        transition: $standartTransition;
+
+        &:not(.active):hover {
+            // color: #c0bfbf;
+        }
+    }
+
+
+}

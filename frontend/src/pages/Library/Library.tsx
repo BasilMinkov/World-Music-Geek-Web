@@ -6,18 +6,16 @@ import axios from 'axios'
 import Accordion from '../../components/Accordion/Accordion'
 import './Library.scss'
 import {IPost} from "../../types"
-import {useParams} from 'react-router'
 
 import Button from '../../components/Button/Button'
 
 const Library: React.FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [hasNext, setHasNext] = useState<boolean>(false)
-    const [hasPrev, setHasPrev] = useState<boolean>(false)
+    const [, setHasPrev] = useState<boolean>(false)
     const [posts, setPosts] = useState<IPost[]>([])
-    const [limit, setLimit] = useState<number>(12)
+    const [limit, ] = useState<number>(12)
     const [page, setPage] = useState<number>(1)
-    const [query, setQuery] = useState('')
     const backUrl = process.env.REACT_APP_BACKEND_URL
 
     useEffect(() => {
