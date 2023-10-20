@@ -6,8 +6,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from sqlalchemy import or_  # Import 'or_' for filter conditions
 from app.utils import modify_dict
-from constants import COUNTRIES_MAP
 from flask import send_from_directory
+from constants import COUNTRIES_MAP, GENRES, PEOPLES, INSTRUMENTS, LABELS
 
 @app.route('/posts', methods=['GET'])
 def posts():
@@ -66,14 +66,13 @@ def post():
 
     return json.dumps(
         {
-        'post': query.as_dict(),
+            'post': query.as_dict(),
         },
         indent=4, default=str, ensure_ascii=False)
 
 
 @app.route('/countries', methods=['GET'])
 def countries():
-
     # Construct the base query
     base_query = Post.query.order_by()
 
@@ -86,6 +85,18 @@ def countries():
     return jsonify(
         {
             'values': countries_dict,
+        }
+    )
+
+
+@app.route('/rubricator', methods=['GET'])
+def rubricator():
+    return jsonify(
+        {
+            'genres': GENRES,
+            'instruments': INSTRUMENTS,
+            'peoples': PEOPLES,
+            'labels': [value['name'] for key, value in LABELS.items()]
         }
     )
 
@@ -107,10 +118,12 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Log In', form=form)
 
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('blog'))
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -125,6 +138,7 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
 
 @app.route('/user/<username>')
 @login_required
@@ -142,6 +156,7 @@ def get_data():
     data = {'message': 'Hello, world!'}
     return data
 
+  
 @app.route('/photos/<path:path>')
 def serve_static(path):
     return send_from_directory('photos', path)
