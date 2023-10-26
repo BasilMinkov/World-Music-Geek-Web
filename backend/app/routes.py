@@ -6,8 +6,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Post
 from sqlalchemy import or_  # Import 'or_' for filter conditions
 from app.utils import modify_dict
+from flask import send_from_directory
 from constants import COUNTRIES_MAP, GENRES, PEOPLES, INSTRUMENTS, LABELS
-
 
 @app.route('/posts', methods=['GET'])
 def posts():
@@ -159,3 +159,8 @@ def user(username):
 def get_data():
     data = {'message': 'Hello, world!'}
     return data
+
+  
+@app.route('/photos/<path:path>')
+def serve_static(path):
+    return send_from_directory('photos', path)

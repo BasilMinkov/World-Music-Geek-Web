@@ -9,7 +9,7 @@ import { IPost } from "../../types";
 import AlbumCard from "../../components/AlbumCard/AlbumCard";
 import AppleMusicIcon from "../../assets/images/streamings/US-UK_Apple_Music_Listen_on_Lockup_RGB_blk_072720.svg";
 import BandCampIcon from "../../assets/images/streamings/bandcamp-logotype-dark-512.png";
-
+              
 const Post: React.FC = (props) => {
   const [post, setPost] = useState<IPost>({
     id: null,
@@ -33,11 +33,12 @@ const Post: React.FC = (props) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
+  const backUrl = process.env.REACT_APP_BACKEND_URL + ':5000/';
 
   useEffect(() => {
     window.scroll(0, 0);
     axios
-      .get(`http://127.0.0.1:5000/post?id=${post_id?.postId}`)
+      .get(backUrl + 'post?id=' + post_id?.postId)
       .then((response) => {
         const post = response?.data?.post;
         console.log("post", post);
@@ -67,7 +68,7 @@ const Post: React.FC = (props) => {
         });
         setCountry(country);
         axios
-          .get(`http://127.0.0.1:5000/posts?page=1&page_size=9&tag=${country}`)
+          .get(backUrl + `posts?page=1&page_size=9&tag=${country}`)
           .then((response) => {
             // console.log('response', response)
             setPosts((prev) => {
@@ -87,7 +88,7 @@ const Post: React.FC = (props) => {
       return result[1];
     }
   };
-
+  
   console.log(post.image);
   return (
     <Layout>

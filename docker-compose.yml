@@ -1,0 +1,18 @@
+services:
+  frontend:
+    image: wmg-front
+    build:
+      context: ./
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - "8080:3000"
+    environment:
+      - REACT_APP_BACKEND_URL=http://backend.world-music-geek-web.orb.local
+  
+  backend:
+    image: wmg-back
+    build:
+      context: ./
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "5000:5000"
