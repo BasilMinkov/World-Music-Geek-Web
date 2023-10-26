@@ -78,6 +78,10 @@ def countries():
 
     countries_dict = dict()
     for key, value in COUNTRIES_MAP.items():
+
+        if len(value.split(' ')) > 1:
+            value = value.replace(' ', '_')
+
         countries_dict[key] = {
             'albums': base_query.filter(Post.tags.like(f"%{value}%")).count()
         }

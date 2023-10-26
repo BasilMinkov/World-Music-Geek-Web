@@ -1,8 +1,39 @@
 # World Music Geek Web
 
-
 This is a project for World Music Geek website.
 
+## Backend
+
+### Run server
+
+```commandline
+sudo apt install python3.10 
+sudo apt install virtualenv  # или venv
+python3.10 -m pip install --user venv 
+python3.10 -m venv wmg 
+source wmg/bin/activate 
+cd backend 
+export FLASK_APP=blog.py 
+flask run
+```
+
+### Initialise database
+
+```commandline
+flask db init
+flask db migrate
+flask db upgrade
+```
+
+## Frontend
+
+### Run server
+
+```commandline
+cd frontend
+npm install
+npm run start
+```
 ## Utils
 
 ### Telegram Parser
