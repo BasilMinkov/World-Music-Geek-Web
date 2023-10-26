@@ -145,8 +145,9 @@ def get_properties(plain_text):
         links = dict(sorted(links.items())).values()
 
         if 'UK' in tags:
-            tags.remove('UK')
-            tags.append()
+            tags = tags.replace('UK', 'United Kingdom')
+        if 'USA' in tags:
+            tags = tags.replace('USA', 'United States')
 
         return author, album, label, year, tags, content, links, *links
     else:
