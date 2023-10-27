@@ -16,13 +16,14 @@ const Library: React.FC = () => {
     const [posts, setPosts] = useState<IPost[]>([])
     const [limit, ] = useState<number>(12)
     const [page, setPage] = useState<number>(1)
-    const backUrl = process.env.REACT_APP_BACKEND_URL
+    const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL + ':5000'
+    //const backUrl = 'https://0.0.0.0:5000'
 
     useEffect(() => {
         const query = new URLSearchParams(window.location.search).toString();
         console.log('query', query)
         setIsLoading(true)
-        const postsUrlQuery = backUrl + `:5000/posts?page=${page}&page_size=${limit}&${query}`
+        const postsUrlQuery = backUrl + `/posts?page=${page}&page_size=${limit}&${query}`
         
         axios.get(postsUrlQuery)
             .then((response) => {
@@ -42,7 +43,7 @@ const Library: React.FC = () => {
         setIsLoading(true)
         const nextPage = page + 1
         setPage(nextPage)
-        const postsUrl = backUrl + `:5000/posts?page=${nextPage}&page_size=${limit}`
+        const postsUrl = backUrl + `/posts?page=${nextPage}&page_size=${limit}`
         
         axios.get(postsUrl)
             .then((response) => {

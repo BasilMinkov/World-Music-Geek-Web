@@ -33,12 +33,13 @@ const Post: React.FC = (props) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
-  const backUrl = process.env.REACT_APP_BACKEND_URL + ':5000/';
+  const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL + ':5000';
+  //const backUrl = 'https://0.0.0.0:5000';
 
   useEffect(() => {
     window.scroll(0, 0);
     axios
-      .get(backUrl + 'post?id=' + post_id?.postId)
+      .get(backUrl + '/post?id=' + post_id?.postId)
       .then((response) => {
         const post = response?.data?.post;
         console.log("post", post);
@@ -68,7 +69,7 @@ const Post: React.FC = (props) => {
         });
         setCountry(country);
         axios
-          .get(backUrl + `posts?page=1&page_size=9&tag=${country}`)
+          .get(backUrl + `/posts?page=1&page_size=9&tag=${country}`)
           .then((response) => {
             // console.log('response', response)
             setPosts((prev) => {
