@@ -1,4 +1,3 @@
-
 FROM node:latest as builder
 
 WORKDIR /frontend
@@ -11,5 +10,6 @@ FROM caddy:latest
 WORKDIR /static
 COPY --from=builder frontend/build /static
 COPY --from=builder frontend/Caddyfile /static/Caddyfile
+COPY photos /static/photos
 
-ENTRYPOINT ["caddy", "file-server", "--listen", "0.0.0.0:8080"]
+ENTRYPOINT ["caddy", "run", "--config", "Caddyfile"]

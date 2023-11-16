@@ -157,10 +157,10 @@ def user(username):
 
 @app.route('/api/data')
 def get_data():
-    data = {'message': 'Hello, world!'}
+    data = {'message': 'Hello, WorldMusicGeek!'}
     return data
 
   
-@app.route('/photos/<path:path>')
-def serve_static(path):
-    return send_from_directory('photos', path)
+#@app.route('/photos/<path:path>')
+#def serve_static(path):
+#    return send_from_directory('photos', path)

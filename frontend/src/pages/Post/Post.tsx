@@ -33,7 +33,7 @@ const Post: React.FC = (props) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
-  const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL + ':5000';
+  const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL;
   //const backUrl = 'https://0.0.0.0:5000';
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const Post: React.FC = (props) => {
       <div className="post">
         <div className="post__banner">
           <div className="post__image">
-            <img src={post?.image ? require(`./${post?.image}`) : ""} alt="" />
+            <img src={window.location.origin + '/' + post?.image} alt="" />
           </div>
         </div>
         <div className="post__content">
@@ -149,7 +149,7 @@ const Post: React.FC = (props) => {
                   {posts.map((post, index) => {
                     return (
                       <AlbumCard
-                        imageLink={post?.image}
+                        imageLink={window.location.origin + '/' + post?.image}
                         postId={post?.id}
                         artist={post?.artist}
                         album={post?.album}

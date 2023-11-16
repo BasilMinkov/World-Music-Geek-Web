@@ -16,7 +16,7 @@ const Library: React.FC = () => {
     const [posts, setPosts] = useState<IPost[]>([])
     const [limit, ] = useState<number>(12)
     const [page, setPage] = useState<number>(1)
-    const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL + ':5000'
+    const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL
     //const backUrl = 'https://0.0.0.0:5000'
 
     useEffect(() => {
