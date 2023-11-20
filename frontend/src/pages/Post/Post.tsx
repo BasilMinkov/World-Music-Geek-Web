@@ -34,7 +34,6 @@ const Post: React.FC = (props) => {
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
   const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL;
-  //const backUrl = 'https://0.0.0.0:5000';
 
   useEffect(() => {
     window.scroll(0, 0);
