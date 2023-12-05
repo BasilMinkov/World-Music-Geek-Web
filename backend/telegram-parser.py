@@ -51,28 +51,34 @@ def get_plain_text(text_with_json):
 
 def process_title(string):
 
-    target = ''
+    dash = '—'
     result = 1e6
 
-    # Split post by dash of multiple types
-    for dash in ['—', '–', '-']:
-        index = string.find(dash)
+    index = string.find('—')
 
-        if (index >= 0) and (result > index):
-            result = index
-            target = dash
+    if (index >= 0) and (result > index):
+        result = index
 
     if 1e6 > result > 0:
 
-        print(target)
-
         # Find author name
-        result = string.split(target)
+        result = string.split(dash)
         author = result[0].strip()
 
         # Find album name
-        result = target.join(result[1:])
-        album = result[0:result.find('(')]
+        result = dash.join(result[1:])
+
+        rnd_c = result.find('(')
+        sq_c = result.find('[')
+
+        print(rnd_c, sq_c)
+
+        if -1 < sq_c < rnd_c:
+            c = sq_c
+        else:
+            c = rnd_c
+
+        album = result[0:c]
 
         # Find year
         result = result[result.find('(')+1:-1].split(',')
@@ -148,6 +154,8 @@ def get_properties(plain_text):
             tags = tags.replace('UK', 'United Kingdom')
         if 'USA' in tags:
             tags = tags.replace('USA', 'United States')
+        if ('video' in tags) or ('documentary' in tags) or ('film' in tags):
+            return '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''
 
         return author, album, label, year, tags, content, links, *links
     else:
@@ -212,11 +220,16 @@ def main():
 
     # Get input path and generates output path
     input = args['path']
+    input_eng = '/home/wassilyminkow/Develop/data/ChatExport/result_eng.json'
     output = os.path.join(*os.path.normpath(input).split(os.sep)[:-1] + ['posts.db'])
 
     # Load JSON data from the input file
     with open(input) as train_file:
         dict_train = json.load(train_file)
+
+    # Load english JSON data from the input file
+    with open(input_eng) as train_file:
+        dict_train_eng = json.load(train_file)
 
     # Convert JSON data to a DataFrame
     df = pd.DataFrame.from_records(dict_train["messages"])
@@ -233,9 +246,26 @@ def main():
     df['year'] = properties.apply(lambda x: x[3])
     df['tags'] = properties.apply(lambda x: x[4])
     df['text'] = properties.apply(lambda x: x[5])
+    df['text_eng'] = ''
+
+    df['album'] = list(map(lambda x: x.strip(), df['album'].values))
 
     for id, link in enumerate(sorted(list(map(lambda x: x.lower(), MUSIC_LINKS[:-1])) + ['other'])):
         df[link.lower()] = properties.apply(lambda x: x[7+id])
+
+    # Convert JSON data to a DataFrame
+    df_eng = pd.DataFrame.from_records(dict_train_eng["messages"])
+    df_eng = df_eng[~pd.isna(df_eng['photo'])]
+    df_eng = df_eng[df_eng['type'] == "message"]["text"]
+
+    properties = df_eng.apply(lambda x: get_properties(get_plain_text(x)))
+
+    for x in properties:
+
+        if (x[1].strip() in df['album'].values) and (x[0] in df['author'].values):
+            df.loc[(df['author'] == x[0]) & (df['album'] == x[1].strip()), 'text_eng'] = x[5]
+
+    # properties.apply(lambda x:)
 
     df = df[df['tags'] != '']
 
