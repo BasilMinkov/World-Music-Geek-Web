@@ -1,9 +1,15 @@
-FROM photon:latest
+FROM node:latest as builder
 
 WORKDIR /frontend
-
-RUN tdnf install -y nodejs
 COPY frontend /frontend
 RUN npm install
+RUN npm run build
 
-ENTRYPOINT ["npm", "start"]
+FROM caddy:latest
+
+WORKDIR /static
+COPY --from=builder frontend/build /static
+COPY --from=builder frontend/Caddyfile /static/Caddyfile
+COPY photos /static/photos
+
+ENTRYPOINT ["caddy", "run", "--config", "Caddyfile"]

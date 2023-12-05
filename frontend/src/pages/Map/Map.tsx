@@ -12,9 +12,11 @@ interface IMap {}
 const Map: React.FC<IMap> = (props) => {
   const navigate = useNavigate();
   const [values, setValues] = useState(null);
+  const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL;
 
+  console.log('BACK URL : ' + backUrl);
   useEffect(() => {
-    axios.get(`http://127.0.0.1:5000/countries`).then((response) => {
+    axios.get(backUrl + `/countries`).then((response) => {
       console.log(response?.data?.values);
       setValues(response?.data?.values);
     });

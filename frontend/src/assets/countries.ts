@@ -1,4 +1,4 @@
-const countries = {
+const countries: { [key:string]: string} = {
   AF: 'Afghanistan',
   AX: 'Åland Islands',
   AL: 'Albania',
