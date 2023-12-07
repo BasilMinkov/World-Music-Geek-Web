@@ -20,10 +20,7 @@ const Library: React.FC = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [limit] = useState<number>(12);
   const [page, setPage] = useState<number>(1);
-  const backUrl =
-    process.env.NODE_ENV === "production"
-      ? "https://wmg-backend.fly.dev"
-      : process.env.REACT_APP_BACKEND_URL;
+  const backUrl = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_DOMAIN_PROD : process.env.REACT_APP_DOMAIN_DEV;
 
   // Get list of not null countries {'KEY' : 'albums': number}
   useEffect(() => {

@@ -1,9 +1,11 @@
 FROM node:latest as builder
+ARG ENV
 
 WORKDIR /frontend
 COPY frontend /frontend
 RUN npm install
-RUN npm run build
+RUN echo $ENV
+RUN if [ "$ENV" = "DEV" ]; then npm run build-dev; else npm run build-prod; fi
 
 FROM caddy:latest
 

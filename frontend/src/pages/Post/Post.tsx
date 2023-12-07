@@ -33,7 +33,7 @@ const Post: React.FC = (props) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [country, setCountry] = useState("");
   const navigate = useNavigate();
-  const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL;
+  const backUrl = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_DOMAIN_PROD : process.env.REACT_APP_DOMAIN_DEV;
 
   useEffect(() => {
     window.scroll(0, 0);

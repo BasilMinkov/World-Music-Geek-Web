@@ -10,6 +10,7 @@ primary_region = "ams"
 
 [env]
   REACT_APP_BACKEND_URL = "wmg-backend.internal"
+  ENV = "PROD"
 
 [[services]]
   protocol = "tcp"

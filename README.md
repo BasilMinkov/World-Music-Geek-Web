@@ -60,6 +60,9 @@ brew install orbstack
 	
 ```
 
+The folder for the app should be `world-music-geek`,
+Which correspond to the orbstack's local domains naming
+
 ## Running
 
 - Put *app.db* and *photos* folder in the root of the repo
@@ -67,4 +70,6 @@ brew install orbstack
 
 ```sh
 docker compose up
+// or
+sudo -E docker compose up
 ```

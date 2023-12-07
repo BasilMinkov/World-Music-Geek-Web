@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const Dotenv = require('dotenv-webpack')
 const CopyPlugin = require('copy-webpack-plugin')
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -101,10 +102,6 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new NodePolyfillPlugin(),
-        new webpack.DefinePlugin({
-          'process.env': {
-              'REACT_APP_BACKEND_URL': JSON.stringify(process.env.REACT_APP_BACKEND_URL)
-             }
-        }),
+        new Dotenv(),
     ],
 }

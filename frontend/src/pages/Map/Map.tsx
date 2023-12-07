@@ -12,7 +12,7 @@ interface IMap {}
 const Map: React.FC<IMap> = (props) => {
   const navigate = useNavigate();
   const [values, setValues] = useState(null);
-  const backUrl = process.env.NODE_ENV === 'production' ? 'https://wmg-backend.fly.dev' : process.env.REACT_APP_BACKEND_URL;
+  const backUrl = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_DOMAIN_PROD : process.env.REACT_APP_DOMAIN_DEV;
 
   console.log('BACK URL : ' + backUrl);
   useEffect(() => {
