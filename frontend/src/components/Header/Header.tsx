@@ -21,7 +21,9 @@ const Header: React.FC = (props) => {
     <header className="header">
       <div className="container">
         <div className="logo">
-            <a onClick={() => navigation("/library")}>
+            <a href="https://linktr.ee/world.music.geek"
+            //onClick={() => navigation("/library")}
+            >
                 <img src={SiteLogo} alt="Smokyzon Logo" />
             </a>
         </div>

@@ -11,14 +11,14 @@ const Footer: React.FC = (props) => {
         <div className="container">
             <footer className='footer'>
                 <div className="footer__logo-container">
-                    <Link to="/">
+                    <Link to="https://linktr.ee/world.music.geek">
                         <img src={footerLogo} alt="" />
                         <img src={footerLogoFull} alt="" />
                     </Link>
                 </div>
                 <Menu position="footer" />
                 <div className="footer__organization">
-                    <span>world music geek &copy;{String((new Date()).getFullYear())}</span>
+                    <span>world music geek &copy;2020 - {String((new Date()).getFullYear())}</span>
                 </div>
             </footer>
         </div>
