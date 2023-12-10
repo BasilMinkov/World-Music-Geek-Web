@@ -81,10 +81,11 @@ const Library: React.FC = () => {
   }, [limit]);
 
   const handleClick = () => {
+    const query = new URLSearchParams(window.location.search).toString();
     setIsLoading(true);
     const nextPage = page + 1;
     setPage(nextPage);
-    const postsUrl = backUrl + `/posts?page=${nextPage}&page_size=${limit}`;
+    const postsUrl = backUrl + `/posts?page=${nextPage}&page_size=${limit}&${query}`;
 
     axios
       .get(postsUrl)
